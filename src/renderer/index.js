@@ -1,7 +1,34 @@
 const Reconciler = require("react-reconciler");
 
 const HostConfig = {
-  //TODO We will specify all required methods here
+  now: Date.now,
+  getRootHostContext: function(...args) {
+    console.log("getRootHostContext", ...args);
+  },
+  getChildHostContext: function(...args) {
+    console.log("getChildHostContext", ...args);
+  },
+  shouldSetTextContent: function(...args) {
+    console.log("shouldSetTextContent", ...args);
+  },
+  createTextInstance: function(...args) {
+    console.log("createTextInstance", ...args);
+  },
+  createInstance: function(...args) {
+    console.log("createInstance", ...args);
+  },
+  appendInitialChild: function(...args) {
+    console.log("appendInitialChild", ...args);
+  },
+  finalizeInitialChildren: function(...args) {
+    console.log("finalizeInitialChildren", ...args);
+  },
+  prepareForCommit: function(...args) {
+    console.log("prepareForCommit", ...args);
+  },
+  resetAfterCommit: function(...args) {
+    console.log("resetAfterCommit", ...args);
+  }
 };
 const reconcilerInstance = Reconciler(HostConfig);
 
