@@ -2,33 +2,63 @@ const Reconciler = require("react-reconciler");
 
 const HostConfig = {
   now: Date.now,
-  getRootHostContext: function(...args) {
-    console.log("getRootHostContext", ...args);
+  getRootHostContext: function(nextRootInstance) {
+    let rootContext = {};
+    return rootContext;
   },
-  getChildHostContext: function(...args) {
-    console.log("getChildHostContext", ...args);
+  getChildHostContext: function(parentContext, fiberType, rootInstance) {
+    let context = { type: fiberType };
+    return context;
   },
-  shouldSetTextContent: function(...args) {
-    console.log("shouldSetTextContent", ...args);
+  shouldSetTextContent: function(type, nextProps) {
+    return false;
   },
-  createTextInstance: function(...args) {
-    console.log("createTextInstance", ...args);
+  createTextInstance: function(
+    newText,
+    rootContainerInstance,
+    currentHostContext,
+    workInProgress
+  ) {
+    return document.createTextNode(newText);
   },
-  createInstance: function(...args) {
-    console.log("createInstance", ...args);
+  createInstance: function(
+    type,
+    newProps,
+    rootContainerInstance,
+    currentHostContext,
+    workInProgress
+  ) {
+    const element = document.createElement(type);
+    element.className = newProps.className || "";
+    element.style = newProps.style;
+    // ....
+    // ....
+    // if (newProps.onClick) {
+    //   element.addEventListener('click', newProps.onClick)
+    // }
+    return element;
   },
-  appendInitialChild: function(...args) {
-    console.log("appendInitialChild", ...args);
+  appendInitialChild: (parent, child) => {
+    parent.appendChild(child);
   },
-  finalizeInitialChildren: function(...args) {
-    console.log("finalizeInitialChildren", ...args);
+  finalizeInitialChildren: (
+    instance,
+    type,
+    newProps,
+    rootContainerInstance,
+    currentHostContext
+  ) => {
+    return newProps.autofocus; //simply return true for experimenting
   },
-  prepareForCommit: function(...args) {
-    console.log("prepareForCommit", ...args);
+  prepareForCommit: function(rootContainerInstance) {},
+  resetAfterCommit: function(rootContainerInstance) {},
+  commitMount: (domElement, type, newProps, fiberNode) => {
+    domElement.focus();
   },
-  resetAfterCommit: function(...args) {
-    console.log("resetAfterCommit", ...args);
-  }
+  appendChildToContainer: (parent, child) => {
+    parent.appendChild(child);
+  },
+  supportsMutation: true
 };
 const reconcilerInstance = Reconciler(HostConfig);
 

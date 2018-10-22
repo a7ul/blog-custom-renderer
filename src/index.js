@@ -10,7 +10,9 @@ const App = () => {
   return (
     <div>
       <Text className="hello-class" content="Hello" />
-      <span style="color:blue;">World</span>
+      <span style="color:blue;" autofocus>
+        World
+      </span>
     </div>
   );
 };
