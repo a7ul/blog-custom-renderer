@@ -33,9 +33,9 @@ const HostConfig = {
     element.style = newProps.style;
     // ....
     // ....
-    // if (newProps.onClick) {
-    //   element.addEventListener('click', newProps.onClick)
-    // }
+    if (newProps.onClick) {
+      element.addEventListener("click", newProps.onClick);
+    }
     return element;
   },
   appendInitialChild: (parent, child) => {
@@ -58,8 +58,51 @@ const HostConfig = {
   appendChildToContainer: (parent, child) => {
     parent.appendChild(child);
   },
-  supportsMutation: true
+  supportsMutation: true,
+  prepareUpdate: function(
+    instance,
+    type,
+    oldProps,
+    newProps,
+    rootContainerInstance,
+    currentHostContext
+  ) {
+    return; //return nothing.
+  },
+  commitUpdate: function(
+    instance,
+    updatePayload,
+    type,
+    oldProps,
+    newProps,
+    finishedWork
+  ) {
+    return; //return nothing.
+  },
+  commitTextUpdate: function(textInstance, oldText, newText) {
+    textInstance.nodeValue = newText;
+  },
+  appendChild: function(parentInstance, child) {
+    parentInstance.appendChild(child);
+  },
+  insertBefore: (parentInstance, child, beforeChild) => {
+    parentInstance.insertBefore(child, beforeChild);
+  },
+  removeChild: function(parentInstance, child) {
+    parentInstance.removeChild(child);
+  },
+  insertInContainerBefore: function(container, child, beforeChild) {
+    container.insertBefore(child, beforeChild);
+  },
+  removeChildFromContainer: function(container, child) {
+    container.removeChild(child);
+  },
+  resetTextContent: function(domElement) {},
+  shouldDeprioritizeSubtree: function(type, nextProps) {
+    return !!nextProps.hidden;
+  }
 };
+
 const reconcilerInstance = Reconciler(HostConfig);
 
 const CustomRenderer = {
